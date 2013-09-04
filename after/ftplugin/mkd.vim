@@ -23,12 +23,12 @@ func! Foldexpr_markdown(lnum)
     elseif l2 =~ '^--\+\s*'
         " next line is underlined (level 2)
         return '>2'
+    elseif l1 =~ '^\t*- '
+        " indent unordered lists
+        return '>'.(matchend(l1, '^\t*')+4)
     elseif l1 =~ '^#'
-        " don't include the section title in the fold
-        return '-1'
-    elseif l0 =~ '^#'
         " current line starts with hashes
-        return '>'.matchend(l0, '^#\+')
+        return '>'.matchend(l1, '^#\+')
     else
         " keep previous foldlevel
         return '='
