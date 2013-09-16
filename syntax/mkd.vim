@@ -75,6 +75,7 @@ syn region mkdCode         start="<code[^>]*>"             end="</code>"
 syn region mkdFootnote     start="\[^"                     end="\]"
 syn match  mkdCode         /^\s*\n\(\(\s\{8,}[^ ]\|\t\t\+[^\t]\).*\n\)\+/
 syn match  mkdIndentCode   /^\s*\n\(\(\s\{4,}[^ ]\|\t\+[^\t]\).*\n\)\+/ contained
+" TODO codeblocks nested in list must be double-indented, otherwise paragraph
 syn match  mkdListItem     "^\s*[-*+]\s\+"
 syn match  mkdListItem     "^\s*\d\+\.\s\+"
 syn region mkdNonListItemBlock start="\n\(\_^\_$\|\s\{4,}[^ ]\|\t+[^\t]\)\@!" end="^\(\s*\([-*+]\|\d\+\.\)\s\+\)\@=" contains=@mkdNonListItem,@Spell
@@ -83,6 +84,9 @@ syn match  mkdRule         /^\s*-\s\{0,1}-\s\{0,1}-$/
 syn match  mkdRule         /^\s*_\s\{0,1}_\s\{0,1}_$/
 syn match  mkdRule         /^\s*-\{3,}$/
 syn match  mkdRule         /^\s*\*\{3,5}$/
+
+"define Todo status groups
+syn match  todoStatus      /\(\s*- \)\(\([()/.=:!?x~%-]\)\3\)/
 
 "HTML headings
 syn region htmlH1       start="^\s*#"                   end="\($\|#\+\)" contains=@Spell
@@ -116,6 +120,9 @@ HtmlHiLink mkdLinkDefTarget mkdURL
 HtmlHiLink mkdLinkTitle     htmlString
 
 HtmlHiLink mkdDelimiter     Delimiter
+
+"TODO highlighting for groups
+HtmlHiLink todoStatus       Structure
 
 " Automatically insert bullets
 setlocal formatoptions+=r
